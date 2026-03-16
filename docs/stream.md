@@ -406,16 +406,12 @@ examples/stream/
 
 예제 목록
 
-```
-[StreamFilterExample](../examples/stream/StreamFilterExample.java)
-[StreamMapExample](../examples/stream/StreamMapExample.java)
-[StreamFilterMapExample](../examples/stream/StreamFilterMapExample.java)
-[StreamCollectExample](../examples/stream/StreamCollectExample.java)
-[StreamGroupingExample](../examples/stream/StreamGroupingExample.java)
-[StreamObjectExample](../examples/stream/StreamObjectExample.java)
-```
-
-GitHub 링크
+- [StreamFilterExample](../examples/stream/StreamFilterExample.java)
+- [StreamMapExample](../examples/stream/StreamMapExample.java)
+- [StreamFilterMapExample](../examples/stream/StreamFilterMapExample.java)
+- [StreamCollectExample](../examples/stream/StreamCollectExample.java)
+- [StreamGroupingExample](../examples/stream/StreamGroupingExample.java)
+- [StreamObjectExample](../examples/stream/StreamObjectExample.java)
 
 <!-- TODO
 GitHub 코드 링크 추가 예정
