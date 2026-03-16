@@ -407,12 +407,12 @@ examples/stream/
 예제 목록
 
 ```
-StreamFilterExample.java
-StreamMapExample.java
-StreamFilterMapExample.java
-StreamCollectExample.java
-StreamGroupingExample.java
-StreamObjectExample.java
+[StreamFilterExample](../examples/stream/StreamFilterExample.java)
+[StreamMapExample](../examples/stream/StreamMapExample.java)
+[StreamFilterMapExample](../examples/stream/StreamFilterMapExample.java)
+[StreamCollectExample](../examples/stream/StreamCollectExample.java)
+[StreamGroupingExample](../examples/stream/StreamGroupingExample.java)
+[StreamObjectExample](../examples/stream/StreamObjectExample.java)
 ```
 
 GitHub 링크
