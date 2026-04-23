@@ -30,6 +30,176 @@ SOLID는 다음 다섯 가지 원칙의 앞 글자를 모은 이름이다.
 
 ## 코드 비교
 
+### SRP: 단일 책임 원칙
+
+다음 코드는 주문 생성과 알림 발송 책임이 한 클래스에 함께 있다.
+
+```java
+class OrderService {
+    void order(String productName) {
+        System.out.println(productName + " 주문 생성");
+        System.out.println("주문 완료 알림 발송");
+    }
+}
+```
+
+알림 방식이 바뀌어도 `OrderService`가 수정된다. 주문 책임과 알림 책임을 분리하면 변경 이유가 줄어든다.
+
+```java
+class OrderService {
+    private final OrderNotifier notifier;
+
+    OrderService(OrderNotifier notifier) {
+        this.notifier = notifier;
+    }
+
+    void order(String productName) {
+        System.out.println(productName + " 주문 생성");
+        notifier.notifyOrderCompleted(productName);
+    }
+}
+
+class OrderNotifier {
+    void notifyOrderCompleted(String productName) {
+        System.out.println(productName + " 주문 완료 알림 발송");
+    }
+}
+```
+
+### OCP: 개방 폐쇄 원칙
+
+다음 코드는 할인 정책이 늘어날 때마다 `DiscountService`의 조건문이 계속 수정된다.
+
+```java
+class DiscountService {
+    int discount(String grade, int price) {
+        if (grade.equals("VIP")) {
+            return price - 1000;
+        }
+
+        return price;
+    }
+}
+```
+
+정책을 인터페이스로 분리하면 기존 서비스 코드를 크게 바꾸지 않고 새 할인 정책을 추가할 수 있다.
+
+```java
+interface DiscountPolicy {
+    int discount(int price);
+}
+
+class VipDiscountPolicy implements DiscountPolicy {
+    public int discount(int price) {
+        return price - 1000;
+    }
+}
+
+class DiscountService {
+    private final DiscountPolicy discountPolicy;
+
+    DiscountService(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+
+    int discount(int price) {
+        return discountPolicy.discount(price);
+    }
+}
+```
+
+### LSP: 리스코프 치환 원칙
+
+부모 타입으로 사용할 수 있다고 해서 항상 올바른 상속은 아니다.
+
+```java
+class Bird {
+    void fly() {
+        System.out.println("난다");
+    }
+}
+
+class Penguin extends Bird {
+    @Override
+    void fly() {
+        throw new UnsupportedOperationException("펭귄은 날 수 없다");
+    }
+}
+```
+
+`Bird`를 사용하는 코드는 모든 새가 날 수 있다고 기대한다. 그런데 `Penguin`이 들어오면 프로그램의 의미가 깨진다.
+
+```java
+interface Bird {
+}
+
+interface Flyable {
+    void fly();
+}
+
+class Sparrow implements Bird, Flyable {
+    public void fly() {
+        System.out.println("참새가 난다");
+    }
+}
+
+class Penguin implements Bird {
+}
+```
+
+날 수 있는 능력을 별도 역할로 분리하면 `Flyable`을 사용하는 코드는 실제로 날 수 있는 객체만 받게 된다.
+
+### ISP: 인터페이스 분리 원칙
+
+너무 큰 인터페이스는 구현 클래스가 사용하지 않는 기능까지 억지로 의존하게 만든다.
+
+```java
+interface Worker {
+    void work();
+    void eat();
+}
+
+class RobotWorker implements Worker {
+    public void work() {
+        System.out.println("로봇 작업");
+    }
+
+    public void eat() {
+        throw new UnsupportedOperationException("로봇은 먹지 않는다");
+    }
+}
+```
+
+역할별로 인터페이스를 나누면 필요한 기능에만 의존할 수 있다.
+
+```java
+interface Workable {
+    void work();
+}
+
+interface Eatable {
+    void eat();
+}
+
+class RobotWorker implements Workable {
+    public void work() {
+        System.out.println("로봇 작업");
+    }
+}
+
+class HumanWorker implements Workable, Eatable {
+    public void work() {
+        System.out.println("사람 작업");
+    }
+
+    public void eat() {
+        System.out.println("식사");
+    }
+}
+```
+
+### DIP: 의존관계 역전 원칙
+
 다음 코드는 주문 서비스가 구체 결제 구현에 직접 의존한다.
 
 ```java
