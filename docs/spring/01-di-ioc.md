@@ -113,6 +113,8 @@ class AppConfig {
 
 `AppConfig`는 객체 생성과 연결을 담당한다. `OrderService`는 주문 흐름에 집중한다.
 
+예를 들어 카드 결제에서 계좌 이체 결제로 바꾸고 싶다면 `OrderService`를 수정하는 것이 아니라 `payment()` 메서드의 반환 객체를 `new CardPayment()`에서 `new BankTransferPayment()`로 바꾸면 된다.
+
 ## 동작 흐름
 
 Spring 없이 순수 Java로 보면 DI / IoC 흐름은 다음과 같다.
